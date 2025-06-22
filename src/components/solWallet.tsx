@@ -4,6 +4,7 @@ import { derivePath } from "ed25519-hd-key";
 import { Keypair, Connection, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 import nacl from "tweetnacl"
 import { Plus, Wallet, Copy, Eye, EyeOff, RefreshCw } from 'lucide-react';
+import { SendTransaction } from './SendTransaction';
 
 interface SolanaWalletProps {
   mnemonic: string;
@@ -172,6 +173,17 @@ export function SolanaWallet({ mnemonic }: SolanaWalletProps) {
                   <div className="bg-slate-900/50 rounded-lg p-2 font-mono text-xs text-slate-300 break-all">
                     {showPrivateKeys[index] ? wallet.privateKey : '•'.repeat(64)}
                   </div>
+                </div>
+                
+                {/* Send Transaction Button */}
+                <div className="pt-3 border-t border-slate-600">
+                  <SendTransaction
+                    walletType="SOL"
+                    fromAddress={wallet.publicKey}
+                    privateKey={wallet.privateKey}
+                    balance={wallet.balance}
+                    onTransactionSent={() => refreshBalance(index)}
+                  />
                 </div>
               </div>
             </div>

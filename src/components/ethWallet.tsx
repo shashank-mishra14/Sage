@@ -3,6 +3,7 @@ import { mnemonicToSeed } from "bip39";
 import { Wallet, HDNodeWallet } from "ethers";
 import { Plus, Wallet as WalletIcon, Copy, Eye, EyeOff, RefreshCw } from 'lucide-react';
 import axios from 'axios';
+import { SendTransaction } from './SendTransaction';
 
 interface EthWalletProps {
   mnemonic: string;
@@ -180,6 +181,17 @@ export const EthWallet = ({ mnemonic }: EthWalletProps) => {
                   <div className="bg-slate-900/50 rounded-lg p-2 font-mono text-xs text-slate-300 break-all">
                     {showPrivateKeys[index] ? wallet.privateKey : '•'.repeat(66)}
                   </div>
+                </div>
+                
+                {/* Send Transaction Button */}
+                <div className="pt-3 border-t border-slate-600">
+                  <SendTransaction
+                    walletType="ETH"
+                    fromAddress={wallet.address}
+                    privateKey={wallet.privateKey}
+                    balance={wallet.balance}
+                    onTransactionSent={() => refreshBalance(index)}
+                  />
                 </div>
               </div>
             </div>
